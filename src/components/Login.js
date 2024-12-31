@@ -21,30 +21,61 @@ const Login = () => {
   }, []);
 
   const handleChange = (e) => {
+    // Use template literal correctly and ensure consistent logging
     console.log(`${e.target.name}: ${e.target.value}`); 
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [e.target.name]: e.target.value,
+    }));
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    // Validate form fields
     if (!formData.accountNumber || !formData.pinCode) {
       setMessage("All fields are required.");
       return;
     }
-
+  
     try {
+      console.log(`PIN Code: ${formData.pinCode.toString()}`);
       const payload = {
-        accountNumber: parseInt(formData.accountNumber, 10),
-        pinCode: formData.pinCode ? formData.pinCode.toString() : "",
+        "accountNumber": parseInt(formData.accountNumber, 10), // Ensure conversion to an integer
+        "pinCode": formData.pinCode.toString(), // Ensure PIN is a string
       };
-      console.log(payload);
-      dispatch(login(payload));
-
+  
+      console.log("Payload:", payload);
+  
+      // Dispatch login action with payload
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      
+      const raw = JSON.stringify({
+        "accountNumber": 332359450,
+        "pinCode": "123456"
+      });
+      
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: JSON.stringify(payload),
+        redirect: "follow"
+      };
+      
+      fetch("http://localhost:8080/login", requestOptions)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error));
+  
       setMessage("Login Successful");
     } catch (error) {
+      // Log the error and set a user-friendly message
+      console.error("Error during login:", error);
       setMessage(error.message || "An error occurred.");
     }
   };
+  
 
   return (
     <div
