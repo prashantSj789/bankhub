@@ -8,6 +8,8 @@ import Transactionhistory from "./components/Transactionhistory"
 import LoginCredentials from "./components/LoginCredentials";
 import Logout from "./components/Logout";
 import TransferMoney from "./components/TransferMoney";
+import Transactionhis from "./components/Transactionhis";
+import Checkbalance from "./components/Checkbalance";
 
 
 function App() {
@@ -19,10 +21,12 @@ function App() {
         <Route path="/account"element={<Register/>}></Route>
         <Route path="/login"element={<Login/>}></Route>
         <Route path="/dashboard"element={isAuthenticated?<Dashboard/>:<Navigate to="/login"/>}></Route>
-        <Route path="/transactionhistory"element={<Transactionhistory/>}></Route>
+        <Route path="/transactionhistory1"element={<Transactionhistory/>}></Route>
         <Route path="/LoginCredentials"element={<LoginCredentials/>}></Route>
         <Route path="/logout"element={<Logout/>}></Route>
         <Route path="/transfermoney"element={<TransferMoney/>}></Route>
+        <Route path="/transactionhistory"element={<Transactionhis/>}></Route>
+        <Route path="/checkbalance"element={<Checkbalance/>}></Route>
       </Routes>
       
       
