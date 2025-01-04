@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { register } from "../services/authService";
 import {bgurl} from  "../utils/constant";
+import image from '../utils/30456.jpg'; // Adjust the path based on the file location
+
 import { useNavigate } from 'react-router-dom';
 
 
@@ -67,7 +69,7 @@ const Register = () => {
   return (
     
     <div style={{
-      backgroundImage: `url(${bgurl})`,
+      backgroundImage: `url(${image})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       minHeight: '100vh', 
@@ -79,13 +81,14 @@ const Register = () => {
       <div style={{
       padding: "30px",
       paddingTop:"10px",
-      marginTop:"300px",
+      marginTop:"100px",
       borderRadius: "15px",
+      backgroundColor: "#1A1A1D",
       boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
       width: "100%",
       maxWidth: "400px",
     }} className="bg-gray-900">
-      <h2 style={{ textAlign: "center", marginBottom: "20px" }} className="text-2xl font-bold">Register</h2>
+      <h2 style={{ textAlign: "center", marginBottom: "20px",color: "white" }} className="text-2xl font-bold">Register</h2>
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: "15px" }}>
         <input className="bg-white "
@@ -155,7 +158,7 @@ const Register = () => {
           width: "100%",
           padding: "10px",
           fontSize: "16px",
-          backgroundColor: "#007BFF",
+          backgroundColor: "#3B1C32",
           color: "#fff",
           border: "none",
           borderRadius: "5px",
