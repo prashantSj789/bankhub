@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { login } from "../features/userDetailSlice";
+
 import { bgurl } from "../utils/constant";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Login = () => {
-  const dispatch = useDispatch();
   const [Message, setMessage] = useState("");
   const { loading, error } = useSelector((state) => state.auth);
   const [formData, setFormData] = useState({ accountNumber: "", pinCode: "" });
@@ -21,61 +20,85 @@ const Login = () => {
   }, []);
 
   const handleChange = (e) => {
-    // Use template literal correctly and ensure consistent logging
-    console.log(`${e.target.name}: ${e.target.value}`); 
+    
+    //console.log(`${e.target.name}: ${e.target.value}`);
     setFormData((prevFormData) => ({
       ...prevFormData,
       [e.target.name]: e.target.value,
     }));
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Validate form fields
     if (!formData.accountNumber || !formData.pinCode) {
       setMessage("All fields are required.");
       return;
     }
-  
+
     try {
-      console.log(`PIN Code: ${formData.pinCode.toString()}`);
+      //console.log(`PIN Code: ${formData.pinCode.toString()}`);
       const payload = {
-        "accountNumber": parseInt(formData.accountNumber, 10), // Ensure conversion to an integer
-        "pinCode": formData.pinCode.toString(), // Ensure PIN is a string
+        accountNumber: parseInt(formData.accountNumber, 10), // Ensure conversion to an integer
+        pinCode: formData.pinCode.toString(), // Ensure PIN is a string
       };
-  
-      console.log("Payload:", payload);
-  
+
+      //console.log("Payload:", payload);
+      localStorage.setItem("Logincred:", JSON.stringify(payload));
+
+      //console.log(localStorage.getItem("Logincred:"));
+
       // Dispatch login action with payload
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
-      
+
       const raw = JSON.stringify({
-        "accountNumber": 332359450,
-        "pinCode": "123456"
+        accountNumber: 332359450,
+        pinCode: "123456",
       });
-      
+
       const requestOptions = {
         method: "POST",
         headers: myHeaders,
         body: JSON.stringify(payload),
-        redirect: "follow"
+        redirect: "follow",
       };
-      
-      fetch("http://localhost:8080/login", requestOptions)
-        .then((response) => response.text())
-        .then((result) => console.log(result))
-        .catch((error) => console.error(error));
-  
+
+      try {
+        const response = await fetch(
+          "http://localhost:8080/login",
+          requestOptions
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          const result = await response.json();
+          localStorage.setItem("accessToken", JSON.stringify(result));
+          
+          
+        } else {
+          const text = await response.text();
+          throw new Error(`Unexpected response: ${text}`);
+        }
+      } catch (error) {
+        console.error("Fetch error:", error); // Handle any errors
+      }
+
+      //localStorage.setItem("loginData", JSON.stringify(result));
+
       setMessage("Login Successful");
+      window.location.href = "/dashboard";
     } catch (error) {
       // Log the error and set a user-friendly message
       console.error("Error during login:", error);
-      setMessage(error.message || "An error occurred.");
+      setMessage(error.message || "An err98765r occurred.");
     }
   };
-  
 
   return (
     <div

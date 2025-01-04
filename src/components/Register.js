@@ -40,8 +40,8 @@ const Register = () => {
     e.preventDefault();
     try {
       const response=await register(formData);
-      const accountnumber=response.accountNumber
-      console.log(accountnumber)
+      
+      //console.log(accountnumber)
       setMessage("Registration successful! Please login.");
       localStorage.setItem("accountnumber",response.accountNumber)
       

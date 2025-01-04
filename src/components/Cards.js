@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 
 const Cards = ({name,url,link}) => {
   return (
-    <div><div className="max-w-sm p-4">
+    <div className='h-70'>
+        <div className="max-w-sm p-4">
     <div className="flex flex-col h-full p-8 bg-teal-400 rounded-lg dark:bg-black">
         <div className="flex items-center mb-3">
             <div
@@ -17,8 +18,9 @@ const Cards = ({name,url,link}) => {
         </div>
         <div className="flex flex-col justify-between flex-grow ">
             <div className='rounded-lg'><iframe src={url}></iframe></div>
+            
         
-            <Link to={link} className="inline-flex items-center mt-3 text-black dark:text-white hover:text-blue-600">Learn More
+            <Link to={link} className="inline-flex items-center mt-3 text-black dark:text-white hover:text-blue-600"><button >Learn More</button>
                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                     stroke-width="2" className="w-4 h-4 ml-2" viewBox="0 0 24 24">
                     <path d="M5 12h14M12 5l7 7-7 7"></path>
@@ -26,7 +28,8 @@ const Cards = ({name,url,link}) => {
                 </Link>
         </div>
     </div>
-</div></div>
+        </div>
+    </div>
   )
 }
 
